@@ -1,0 +1,212 @@
+What is Database?
+    The database is an organized collection of data.
+MySQL Database?
+    'My' - the name of the daughter of co-founder.
+    SQL - Standard Query Language.
+    
+If you want to connect and practice database? (Extra)
+    Work on the notepad, so you would remember the classes name that's all you need in the exam.
+    Download the JDBC Driver - https://www.dropbox.com/s/p6ztza1eqos8x3j/SQL.rar?dl=0
+    Copy the files from SQL folder, place it in your java folder where you installed it, in the bin folder.
+    For MySQL Server
+        Download WAMP.
+        Run it.
+        Learn how to use MySQL from PhpMyAdmin.
+        
+What to learn? (Only the basics)
+    FX or Swing?
+        None, database has nothing to do with FX or Swing. We will learn how to run a database using prints.
+        
+    Classes used:
+        DriverManager        
+        SQLException
+        Connection
+        Statement
+        ResultSet
+        
+    To check if you have installed the driver properly. (Extra)
+        Run this code
+        
+        import java.sql.*;  //This is used to import all the classes we need to establish a connection and use it. 
+        public class DriverTest { //DriverTest is class name.
+
+            static { //The Static Block
+                try { //Try Block
+                    Class.forName("com.mysql.jdbc.Driver");
+                } catch(Exception ex) { //Catching the exception
+                    System.out.println("Unable to load MySQL Driver");
+                    System.exit(0);//This will close the program if driver does not exsist.
+                }
+            }//Static block ends.
+            public static void main(String args[]) { //The Main method, which runs in start.
+                System.out.println("Java Driver Worked");
+            }//Main method ends.
+        }//Class ends.
+        
+        
+    Setting up the connection: (According to Sir Shahbaz, your connection would already be established)
+        Info required about of your database.
+            Server port - Default (3306)
+            Database name.
+            Server Username - Default (root)
+            Server Password - By Default, there is no password for root username.
+        
+        Classes used:
+            Connection
+            DriverManager
+            SQLException
+            
+        Method: 
+            getConnection(String url,String Username, String Password);
+            
+        Getting Started
+            Create an object of class 'Connection'.
+            Store connection in it.
+                DriverManager.getConnection(); - This method returns the the Object of Connection class.    
+            
+        Code:
+            import java.sql.*;  //This is used to import all the classes we need to establish a connection and use it. 
+            public class ConnectionTest { //ConnectionTest is class name.
+                public static void main(String args[]) {//The Main method, which runs in the start.
+                    try {    //Try Block
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/accounts","Arose","123");//Connection is class. accounts is my database name. 3306 is port. Arose is my username. 123 is my password. DriverManager will select the JDBC driver and call getConnection method from it.
+                    }//End of try block
+                    catch(SQLException e) //Catch Block
+                    { System.out.println("Connection Failed");} 
+                }//End of main method
+            
+            }//End of class
+            
+        Your connection is stored     
+            
+    Inserting Data into your table.
+    
+        Info required about of your database:
+            Table name.
+            Column names and type.
+        
+        Classes used:
+            SQLException
+            Connection
+            Statement
+        
+        Method:
+            createStatement();
+            execute(String Query);
+            excuteUpdate(String Query);
+            getUpdateCount();
+            
+        Getting Started
+            Suppose 
+                we have already established a connection and stored it in our 'con' variable.
+                String username stores username I need to store in my table.
+                String password stores password I need to store in my table.
+                My table name is Accounts.
+                    Columns are Username and Password, both are of String type.
+            Now create an object of Statement, i.e create a new statement.
+                con.createStatement(); //This returns a Statement.
+            Create a string with your query.
+            Execute the query.
+        
+        Code 1:
+            try {
+                Statement stmt=con.createStatement();   //This will create our statement that we will be sent to database.
+                String query = String.format("INSERT INTO Accounts (username,password) VALUES ('%s','%s')",username,password); //To Learn the SQL queries, i'll tell later in this tutorial, most likely sir might include the queries too.
+                stmt.execute(query); //This will execute our query. Will send our data to the database.
+                int rows =stmt.getUpdateCount(); //This returns the no of rows that were changed or inserted in the database. 
+                if(rows > 0) //If the no of rows changed was greater than 0 than means our code worked.
+                    System.out.println("Data has been stored");
+                else 
+                    System.out.println("Failed to store.");
+            }
+            catch(SQLException e) //Exception is thrown when, your access is to database is denied.
+            {
+                System.out.println("Error occured");
+            }
+        Code 2:
+            try {
+                Statement stmt=con.createStatement(); //Statement Created. 
+                String query = "INSERT INTO Accounts (username,password) VALUES ('Arose Khan Niazi','ParhLoAbTu')";
+                int rows = stmt.executeUpdate(query); //This will execute our query. Will send our data to the database. And return the no of rows that have been changed or updated.
+                if(rows > 0) //If the no of rows changed was greater than 0 than means our code worked. Means that Arose Khan Niazi with password ParhLoAbTu has been updated to my Accounts table.
+                    System.out.println("Data has been stored");
+                else 
+                    System.out.println("Failed to store.");
+            }
+            catch(SQLException e) //Exception is thrown when, your access is to database is denied.
+            {
+                System.out.println("Error occured");
+            }
+            
+    Getting Data from your table.
+    
+        Info required about of your database:
+            Table name.
+            Column names and type.
+        
+        Classes used:
+            SQLException
+            Connection
+            Statement
+            ResultSet
+        
+        Method:
+            createStatement();
+            execute(String Query);
+            excuteQuery(String Query);
+            getResultSet();
+            next();
+            getString(String ColumnName);
+            
+            
+        Getting Started
+            Suppose 
+                we have already established a connection and stored it in our 'con' variable.
+                My table name is Accounts.
+                    Columns are Username and Password, both are of String type.
+            Now create an object of Statement, i.e create a new statement.
+                con.createStatement(); //This returns a Statement.
+            Create a string with your query.
+            Execute the query and Store it the ResultSet Object.
+            Retrieve and print data. 
+            
+        
+        Code 1:
+            try {
+                Statement stmt=con.createStatement();   //This will create our statement that we will be sent to database.
+                String query = "SELECT * FROM Accounts"; //Query
+                stmt.execute(query);//This will execute our query. Will get our data from the database.
+                ResultSet rs =stmt.getResultSet(); //This will return all the data we have Selected from our database, and store it into rs variable of ResultSet class.
+                while(rs.next()) //This checks if the data is available. Starts from row 0, will move to the first row and see if there is any data. This statement would work until we have gone through all of our data.
+                {
+                    String username= rs.getString("Username"); //This will get the username at the place where our rs would be.  
+                    String password= rs.getString("Password"); //This will get the password at the place where our rs would be. 
+                    System.out.println("Username: "+username); 
+                    System.out.println("\tPassword: "+password);
+                }
+            }
+            catch(SQLException e) //Exception is thrown when, your access is to database is denied.
+            {
+                System.out.println("Error occured");
+            }
+            
+        Code 2:
+            try {
+                Statement stmt=con.createStatement();   //This will create our statement that we will be sent to database.
+                String query = "SELECT * FROM Accounts"; //Query
+                ResultSet rs= stmt.executeUpdate(query);//This will execute our query. Will get our data from the database. And store the data into ResultSet Object rs.
+                while(rs.next()) //This checks if the data is available. Starts from row 0, will move to the first row and see if there is any data. This statement would work until we have gone through all of our data.
+                {
+                    String username= rs.getString("Username"); //This will get the username at the place where our rs would be.  
+                    String password= rs.getString("Password"); //This will get the password at the place where our rs would be. 
+                    System.out.println("Username: "+username); 
+                    System.out.println("\tPassword: "+password);
+                }
+            }
+            catch(SQLException e) //Exception is thrown when, your access is to database is denied.
+            {
+                System.out.println("Error occured");
+            }        
+    
+	Example:
+		File DBTest1.java
