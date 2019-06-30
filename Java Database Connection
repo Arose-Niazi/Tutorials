@@ -8,7 +8,14 @@ If you want to connect and practice database? (Extra)
     Work on the notepad, so you would remember the classes name that's all you need in the exam.
     Download the JDBC Driver - https://www.dropbox.com/s/p6ztza1eqos8x3j/SQL.rar?dl=0
     Copy the files from SQL folder, place it in your java folder where you installed it, in the bin folder.
-    For MySQL Server
+	Copy the path to bin folder.
+	Now open Advance System Settings -> Enviorment Variables ->
+		add this
+			ThePathYouCopied\mysql-connector-java-5.1.47-bin.jar
+		to CLASSPATH
+		if you don't have any CLASSPATH variable create and add this.
+		Example: C:\Program Files\Java\jre1.8.0_191\bin\mysql-connector-java-5.1.47-bin.jar
+	For MySQL Server
         Download WAMP.
         Run it.
         Learn how to use MySQL from PhpMyAdmin.
@@ -210,3 +217,5 @@ What to learn? (Only the basics)
     
 	Example:
 		File DBTest1.java
+			
+	
