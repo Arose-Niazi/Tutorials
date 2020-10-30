@@ -32,7 +32,7 @@
 Click file then read file and all done, you can read multiple files one by one.
 
 ### Notice.
-Make sure you don't add `-geometry` tags in your tcl file.
+Make sure you don't add `-geometry` tags in your tcl file.<BR>
 The code `exec xgraph out0.tr out1.tr` would work fine
 ### Tip
 Keep the xgraph file in same folder as your tcl files so you won't need to search far.
