@@ -28,8 +28,6 @@
   After this now type
   `sudo chmod 777 /bin/xgraph`
 
-### To open a file in xgraph
-Click file then read file and all done, you can read multiple files one by one.
 
 ### Notice.
 Make sure you don't add `-geometry` tags in your tcl file.<BR>
